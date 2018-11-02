@@ -1,0 +1,913 @@
+{
+	"info": {
+		"_postman_id": "d8d81f58-df5b-4c90-87e1-362c7c8bb4bd",
+		"name": "Mainflux",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test-data",
+			"item": []
+		},
+		{
+			"name": "requests",
+			"item": []
+		},
+		{
+			"name": "initialize",
+			"item": []
+		},
+		{
+			"name": "0. create-account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"{{MAINFLUX_EMAIL}}\", \n\t\"password\":\"{{MAINFLUX_PASSWORD}}\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/users",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Creates an account with the MAINFLUX_EMAIL and MAINFLUX_PASSWORD envvars "
+			},
+			"response": []
+		},
+		{
+			"name": "1. get-token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d81a77fb-b1ec-44ad-b5b6-6dd11dd27520",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"MAINFLUX_TOKEN\", jsonData.token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"{{MAINFLUX_EMAIL}}\", \n\t\"password\":\"{{MAINFLUX_PASSWORD}}\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/tokens",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"tokens"
+					]
+				},
+				"description": "Receives the authentication token for the user account with the MAINFLUX_EMAIL and MAINFLUX_PASSWORD envvars "
+			},
+			"response": []
+		},
+		{
+			"name": "2. provision-things-device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"device\", \n\t\"name\":\"device1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/things",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "creates a device"
+			},
+			"response": []
+		},
+		{
+			"name": "2. provision-things-app",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/things",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "creates an app"
+			},
+			"response": []
+		},
+		{
+			"name": "2.  update-thing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"device\", \n\t\"name\":\"device1121\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/things/:thingId",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"things",
+						":thingId"
+					],
+					"variable": [
+						{
+							"key": "thingId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "updates a thing with a given id"
+			},
+			"response": []
+		},
+		{
+			"name": "2. get-provisioned-things",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/things",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "returns provisioned things"
+			},
+			"response": []
+		},
+		{
+			"name": "2. delete-provisioned-thing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/things/:id",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"things",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				},
+				"description": "deletes a provisioned thing by id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. create-channel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"channel1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels"
+					]
+				},
+				"description": "creates a channel\t"
+			},
+			"response": []
+		},
+		{
+			"name": "3. get-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels"
+					]
+				},
+				"description": "returns exixting channels"
+			},
+			"response": []
+		},
+		{
+			"name": "3. update-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"channel100\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels/:channelId",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "update channel with a given id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. add-thing-to-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels/:channelId/things/:thingId",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId",
+						"things",
+						":thingId"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						},
+						{
+							"key": "thingId",
+							"value": "3"
+						}
+					]
+				},
+				"description": "adds a thing to a channel"
+			},
+			"response": []
+		},
+		{
+			"name": "3. get-channel-by-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels/:channelId",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "returns a channel with a given id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. delete-channel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels/2",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						"2"
+					]
+				},
+				"description": "deletes a channel by id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. remove-thing-to-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{MAINFLUX_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/channels/:channelId/things/:thingId",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId",
+						"things",
+						":thingId"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						},
+						{
+							"key": "thingId",
+							"value": "3"
+						}
+					]
+				},
+				"description": "removes a thing to a channel"
+			},
+			"response": []
+		},
+		{
+			"name": "4. send-message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"bn\":\"device1\",\n\t\t\"bt\":1.276020076026e+09, \n\t\t\"bu\":\"A\",\"bver\":5, \n\t\t\"n\":\"voltage\",\n\t\t\"u\":\"V\",\"v\":120.1\n\t}, \n\t{\n\t\t\"n\":\"current\",\n\t\t\"t\":-5,\n\t\t\"v\":1.2\n\t}, \n\t{\n\t\t\"n\":\"current\",\n\t\t\"t\":-4,\n\t\t\"v\":1.3\n\t}\n]"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL}}/http/channels/:channelId/messages",
+					"host": [
+						"{{MAINFLUX_BASE_URL}}"
+					],
+					"path": [
+						"http",
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. influxdb-reader",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"bn\":\"name:\",\"bt\":48.56, \"bu\":\"A\",\"bver\":150, \"n\":\"voltage\",\"u\":\"V\",\"v\":5.6}, {\"bn\":\"name:\",\"bt\":48.56, \"bu\":\"C\",\"bver\":150, \"n\":\"temperature\",\"u\":\"C\",\"v\":24.3}]"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL_HTTP}}:8903/channels/:channelId/messages",
+					"host": [
+						"{{MAINFLUX_BASE_URL_HTTP}}"
+					],
+					"port": "8903",
+					"path": [
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. cassandra-reader",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"bn\":\"name:\",\"bt\":48.56, \"bu\":\"A\",\"bver\":150, \"n\":\"voltage\",\"u\":\"V\",\"v\":5.6}, {\"bn\":\"name:\",\"bt\":48.56, \"bu\":\"C\",\"bver\":150, \"n\":\"temperature\",\"u\":\"C\",\"v\":24.3}]"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL_HTTP}}:8905/channels/:channelId/messages",
+					"host": [
+						"{{MAINFLUX_BASE_URL_HTTP}}"
+					],
+					"port": "8905",
+					"path": [
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. mongodb-reader",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d86909a4-e748-4da8-9c4f-f25602660ea3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"bn\":\"name:\",\"bt\":48.56, \"bu\":\"A\",\"bver\":150, \"n\":\"voltage\",\"u\":\"V\",\"v\":5.6}, {\"bn\":\"name:\",\"bt\":48.56, \"bu\":\"C\",\"bver\":150, \"n\":\"temperature\",\"u\":\"C\",\"v\":24.3}]"
+				},
+				"url": {
+					"raw": "{{MAINFLUX_BASE_URL_HTTP}}:8905/channels/:channelId/messages",
+					"host": [
+						"{{MAINFLUX_BASE_URL_HTTP}}"
+					],
+					"port": "8905",
+					"path": [
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "channelId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
